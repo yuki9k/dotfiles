@@ -6,8 +6,12 @@
 - Bunch of cool and useful plugins
 - Custom dashboard w/ image display using chafa
 - A couple of nice themes, using 'witch' atm
-- Yanky LSP/CMP setup, needs work
-- A cute little sandbox file where I can test shit out
+- LSP/CMP/Formatters/Diagnostics for:
+    - Typescript/Javascript
+    - HTML/CSS
+    - JSON
+    - Markdown
+- Bunch of test files to try out plugins and stuff in.
 ## karabiner
 Caps Lock bound to Esc/Ctrl
 ## starship
