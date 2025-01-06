@@ -1,5 +1,6 @@
 return {
     "nyoom-engineering/oxocarbon.nvim",
+    lazy = true,
     priority = 1000,
     -- config = function()
     --     vim.opt.background = "dark" -- set this to dark or light

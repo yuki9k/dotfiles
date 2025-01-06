@@ -1,7 +1,10 @@
 return {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+        preset = "classic",
+        notify = true,
+    },
     keys = {
         {
             "<leader>?",

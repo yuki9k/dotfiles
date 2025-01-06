@@ -8,6 +8,7 @@ return {
             html = { "prettierd", "prettier", stop_after_first = true },
             css = { "prettierd", "prettier", stop_after_first = true },
             json = { "prettierd", "prettier", stop_after_first = true },
+            php = { "pretty-php" },
         },
         formatters = {
             stylua = {

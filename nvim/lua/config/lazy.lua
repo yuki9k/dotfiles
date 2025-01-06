@@ -29,16 +29,56 @@ require("lazy").setup({
     { "williamboman/mason-lspconfig.nvim", opts = {} },
     {
         "neovim/nvim-lspconfig",
-        config = function()
-            -- Set up lspconfig.
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-            require("lspconfig")["ts_ls"].setup({
-                capabilities = capabilities,
-            })
+        dependencies = { "saghen/blink.cmp" },
 
-            require("lspconfig")["phpactor"].setup({
-                capabilities = capabilities,
+        -- example using `opts` for defining servers
+        opts = {
+            servers = {
+                lua_ls = {},
+                ts_ls = {},
+                phpactor = {},
+                html = {},
+                cssls = {},
+                jsonls = {},
+            },
+        },
+        config = function(_, opts)
+            local lspconfig = require("lspconfig")
+
+            for server, config in pairs(opts.servers) do
+                -- passing config.capabilities to blink.cmp merges with the capabilities in your
+                -- `opts[server].capabilities, if you've defined it
+                config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+                lspconfig[server].setup(config)
+            end
+
+            require("lspconfig").ts_ls.setup({
+                settings = {
+                    typescript = {
+                        inlayHints = {
+                            includeInlayParameterNameHints = "all",
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayVariableTypeHints = true,
+                            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                            includeInlayEnumMemberValueHints = true,
+                        },
+                    },
+                    javascript = {
+                        inlayHints = {
+                            includeInlayParameterNameHints = "all",
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayVariableTypeHints = true,
+                            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                            includeInlayEnumMemberValueHints = true,
+                        },
+                    },
+                },
             })
         end,
     },

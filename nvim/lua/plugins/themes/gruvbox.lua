@@ -1,5 +1,6 @@
 return {
     "ellisonleao/gruvbox.nvim",
+    lazy = true,
     priority = 1000,
     -- config = function()
     -- vim.opt.background = "dark" -- or "light" for light mode

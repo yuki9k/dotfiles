@@ -4,9 +4,9 @@ return {
     opts = {
         options = {
             icons_enabled = true,
-            theme = "auto",
-            component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
+            theme = "nightfly",
+            component_separators = { left = "", right = "" },
+            section_separators = { left = "", right = "" },
             disabled_filetypes = {
                 statusline = {},
                 winbar = {},
@@ -25,7 +25,22 @@ return {
             lualine_a = { "mode" },
             lualine_b = { "branch", "diff", "diagnostics" },
             -- lualine_c = { "filename" },
-            lualine_c = { { "buffers", mode = 4 } },
+            lualine_c = {
+                {
+                    "buffers",
+                    symbols = {
+                        modified = " ●", -- Text to show when the buffer is modified
+                        alternate_file = "# ", -- Text to show to identify the alternate file
+                        directory = "", -- Text to show when the buffer is a directory
+                    },
+                    hide_filename_extension = true,
+                    buffers_color = {
+                        -- Same values as the general color option can be used here.
+                        active = "special", -- Color for active buffer.
+                        -- inactive = "lualine_{section}_inactive", -- Color for inactive buffer.
+                    },
+                },
+            },
             lualine_x = { "encoding", "fileformat", "filetype" },
             lualine_y = { "progress" },
             lualine_z = { "location", { "datetime", style = "%H:%M" } },

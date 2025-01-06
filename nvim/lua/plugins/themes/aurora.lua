@@ -1,5 +1,6 @@
 return {
     "ray-x/aurora",
+    lazy = true,
     priority = 1000,
     -- init = function()
     --     vim.g.aurora_italic = 1
