@@ -24,7 +24,24 @@ vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
 require("lazy").setup({
+    -- Begin with setting up mason and lspconfig before loading rest of plugins
+    { "williamboman/mason.nvim", opts = {} },
+    { "williamboman/mason-lspconfig.nvim", opts = {} },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            -- Set up lspconfig.
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+            require("lspconfig")["ts_ls"].setup({
+                capabilities = capabilities,
+            })
+
+            require("lspconfig")["phpactor"].setup({
+                capabilities = capabilities,
+            })
+        end,
+    },
     { import = "plugins" },
-    { import = "plugins.lsp" },
     { import = "plugins.themes" },
 })

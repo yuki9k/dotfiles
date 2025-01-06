@@ -9,9 +9,9 @@ return {
         "hrsh7th/cmp-cmdline",
     },
     config = function()
-        -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
         local cmp = require("cmp")
-        -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
         cmp.setup({
             -- completion = {
@@ -68,24 +68,5 @@ return {
             }),
             matching = { disallow_symbol_nonprefix_matching = false },
         })
-
-        -- Set up lspconfig.
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-        require("lspconfig")["ts_ls"].setup({
-            capabilities = capabilities,
-            -- on_attach = on_attach,
-            -- root_dir = nvim_lsp.util.root_pattern("package.json"),
-            -- single_file_support = false,
-        })
-
-        require("lspconfig")["phpactor"].setup({
-            capabilities = capabilities,
-        })
-
-        -- require("lspconfig")["denols"].setup({
-        --     on_attach = on_attach,
-        --     -- root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
-        -- })
     end,
 }
