@@ -40,17 +40,32 @@ require("lazy").setup({
                 html = {},
                 cssls = {},
                 jsonls = {},
+                clangd = {},
             },
         },
         config = function(_, opts)
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+            }
+            local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+            for _, ls in ipairs(language_servers) do
+                require("lspconfig")[ls].setup({
+                    capabilities = capabilities,
+                    -- you can add other fields for setting up lsp server in this table
+                })
+            end
             local lspconfig = require("lspconfig")
 
             for server, config in pairs(opts.servers) do
                 -- passing config.capabilities to blink.cmp merges with the capabilities in your
                 -- `opts[server].capabilities, if you've defined it
+
                 config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
             end
+            require("ufo").setup({})
 
             require("lspconfig").ts_ls.setup({
                 settings = {

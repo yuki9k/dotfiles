@@ -10,6 +10,11 @@ vim.keymap.set({ "n", "v" }, "]]", "/\\v\\}|\\)|\\>\\<cr>") -- Forward search fo
 vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
 vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
+
+-- Terminal
+-- vim.keymap.set("n", "<leader>tt", "<cmd>:vsplit term://%:p:h//zsh<cr>i")
+vim.keymap.set("n", "<leader>tt", "<cmd>:ToggleTerm dir=%:p:h<cr>")
+vim.keymap.set("t", "<esc>", "<C-\\><C-n><C-w>h", { silent = true })
 -- vim.keymap.set({ "n", "v" }, "J", "6j")
 -- vim.keymap.set({ "n", "v" }, "K", "6k")
 -- vim.keymap.set({ "n", "v", "i" }, "<C-c>", "<esc>")
@@ -35,6 +40,9 @@ vim.keymap.set(
     ":Telescope file_browser path=%:p:h select_buffer=true<cr>",
     { desc = "Telescope file browser", noremap = true, silent = true }
 )
+-- Folding
+vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 
 -- Buffers
 vim.keymap.set("n", "<leader>bd", function()
@@ -84,6 +92,14 @@ vim.opt.showmode = false
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+-- Folding
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
+vim.opt.foldmethod = "manual"
+vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Other
 vim.opt.undofile = true

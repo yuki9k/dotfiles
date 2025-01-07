@@ -11,7 +11,6 @@
     - HTML/CSS
     - JSON
     - Markdown
-- Bunch of test files to try out plugins and stuff in.
 ## karabiner
 Caps Lock bound to Esc/Ctrl
 ## starship

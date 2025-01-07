@@ -9,6 +9,7 @@ return {
             css = { "prettierd", "prettier", stop_after_first = true },
             json = { "prettierd", "prettier", stop_after_first = true },
             php = { "pretty-php" },
+            cpp = { "clang-format" },
         },
         formatters = {
             stylua = {
