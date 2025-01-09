@@ -13,6 +13,15 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+        signature = {
+            enabled = true,
+            window = {
+                border = "rounded",
+                max_width = math.floor(vim.o.columns * 0.8),
+                max_height = math.floor(vim.o.lines * 0.3),
+                scrollbar = true,
+            },
+        },
         completion = {
             -- 'prefix' will fuzzy match on the text before the cursor
             -- 'full' will fuzzy match on the text before *and* after the cursor
@@ -23,8 +32,17 @@ return {
             -- NOTE: some LSPs may add auto brackets themselves anyway
             -- accept = { auto_brackets = { enabled = false } },
 
+            menu = { border = "rounded" },
             -- Show documentation when selecting a completion item
-            documentation = { auto_show = true, auto_show_delay_ms = 500 },
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 500,
+                window = {
+                    border = "rounded",
+                    max_width = math.floor(vim.o.columns * 0.8),
+                    max_height = math.floor(vim.o.lines * 0.3),
+                },
+            },
 
             -- Display a preview of the selected item on the current line
             ghost_text = { enabled = true },
@@ -33,7 +51,14 @@ return {
         -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
         -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
         -- See the full "keymap" documentation for information on defining your own keymap.
-        keymap = { preset = "super-tab" },
+        keymap = {
+            preset = "super-tab",
+            ["<C-k>"] = { "select_prev", "fallback" },
+            ["<C-j>"] = { "select_next", "fallback" },
+
+            ["<C-p>"] = {},
+            ["<C-n>"] = {},
+        },
 
         appearance = {
             -- Sets the fallback highlight groups to nvim-cmp's highlight groups

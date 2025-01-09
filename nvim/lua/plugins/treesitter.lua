@@ -20,6 +20,7 @@ return {
             "json",
             "toml",
             "markdown",
+            "cpp",
         },
         sync_install = false,
         highlight = { enable = true },

@@ -17,6 +17,7 @@ return {
                         desc = "Find Text",
                         action = ":lua Snacks.dashboard.pick('live_grep')",
                     },
+                    { icon = " ", key = "s", desc = "Restore Session", section = "session" },
                     {
                         icon = " ",
                         key = "r",

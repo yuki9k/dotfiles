@@ -20,13 +20,11 @@ vim.keymap.set("t", "<esc>", "<C-\\><C-n><C-w>h", { silent = true })
 -- vim.keymap.set({ "n", "v", "i" }, "<C-c>", "<esc>")
 
 -- LSP
--- Replaced by Trouble but kept here because why not
--- vim.keymap.set("n", "<leader>ss", function()
---     vim.lsp.buf.hover()
--- end, { desc = "Display hover information about symbol" })
--- vim.keymap.set("n", "<leader>sg", function()
---     vim.lsp.buf.definition()
--- end, { desc = "Jump to symbol definition" })
+vim.keymap.set("n", "<leader>ss", "<cmd>Lspsaga hover_doc<cr>", { desc = "Display hover information about symbol" })
+vim.keymap.set("n", "<leader>sd", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek definition" })
+vim.keymap.set("n", "<leader>rr", function()
+    vim.lsp.buf.rename()
+end, { desc = "Rename symbol" })
 
 -- Telescope
 local builtin = require("telescope.builtin")
@@ -40,6 +38,8 @@ vim.keymap.set(
     ":Telescope file_browser path=%:p:h select_buffer=true<cr>",
     { desc = "Telescope file browser", noremap = true, silent = true }
 )
+vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Telescope TODO" })
+
 -- Folding
 vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
@@ -55,7 +55,6 @@ vim.keymap.set("n", "<C-n>", "<cmd>bnext<cr>")
 vim.keymap.set("n", "<C-p>", "<cmd>bprevious<cr>")
 vim.api.nvim_set_keymap("n", "<C-q>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-q>", "<cmd>b#<cr>")
--- TODO quickswitch between buffers
 
 -- Windows
 vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true })
@@ -69,6 +68,7 @@ vim.keymap.set("n", "<leader>C", "<cmd>Cheatsheet<cr>", { desc = "Open Cheatshee
 vim.keymap.set("n", "<leader>nh", function()
     Snacks.notifier.show_history()
 end, { desc = "Show notification history" })
+vim.keymap.set("v", "yc", '"+y')
 
 -- OPTIONS
 
@@ -111,3 +111,17 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.inccommand = "split"
+
+vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
+    desc = "Setup LSP hover window",
+    callback = function()
+        local width = math.floor(vim.o.columns * 0.8)
+        local height = math.floor(vim.o.lines * 0.3)
+
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+            border = "rounded",
+            max_width = width,
+            max_height = height,
+        })
+    end,
+})

@@ -30,71 +30,67 @@ require("lazy").setup({
     {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },
-
-        -- example using `opts` for defining servers
         opts = {
             servers = {
+                emmet_language_server = { filetypes = { "html" } },
                 lua_ls = {},
-                ts_ls = {},
-                phpactor = {},
+                ts_ls = {
+                    settings = {
+                        typescript = {
+                            inlayHints = {
+                                includeInlayParameterNameHints = "all",
+                                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                                includeInlayFunctionParameterTypeHints = true,
+                                includeInlayVariableTypeHints = true,
+                                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                                includeInlayPropertyDeclarationTypeHints = true,
+                                includeInlayFunctionLikeReturnTypeHints = true,
+                                includeInlayEnumMemberValueHints = true,
+                            },
+                        },
+                        javascript = {
+                            inlayHints = {
+                                includeInlayParameterNameHints = "all",
+                                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                                includeInlayFunctionParameterTypeHints = true,
+                                includeInlayVariableTypeHints = true,
+                                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                                includeInlayPropertyDeclarationTypeHints = true,
+                                includeInlayFunctionLikeReturnTypeHints = true,
+                                includeInlayEnumMemberValueHints = true,
+                            },
+                        },
+                    },
+                },
                 html = {},
+                htmx = {
+                    filetypes = { "html" },
+                },
+                intelephense = {
+                    cmd = { "intelephense", "--stdio" },
+                    filetypes = { "php" },
+                    single_file_support = true,
+                },
                 cssls = {},
                 jsonls = {},
                 clangd = {},
             },
         },
         config = function(_, opts)
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-            }
-            local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-            for _, ls in ipairs(language_servers) do
-                require("lspconfig")[ls].setup({
-                    capabilities = capabilities,
-                    -- you can add other fields for setting up lsp server in this table
-                })
-            end
             local lspconfig = require("lspconfig")
-
             for server, config in pairs(opts.servers) do
                 -- passing config.capabilities to blink.cmp merges with the capabilities in your
                 -- `opts[server].capabilities, if you've defined it
-
                 config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+                config.capabilities.textDocument.foldingRange = {
+                    dynamicRegistration = false,
+                    lineFoldingOnly = true,
+                }
+
                 lspconfig[server].setup(config)
             end
-            require("ufo").setup({})
 
-            require("lspconfig").ts_ls.setup({
-                settings = {
-                    typescript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = "all",
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
-                        },
-                    },
-                    javascript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = "all",
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
-                        },
-                    },
-                },
-            })
+            require("ufo").setup({})
         end,
     },
     { import = "plugins" },
