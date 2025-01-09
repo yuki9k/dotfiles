@@ -29,7 +29,17 @@ require("lazy").setup({
     { "williamboman/mason-lspconfig.nvim", opts = {} },
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "saghen/blink.cmp" },
+        dependencies = {
+            { "ms-jpq/coq_nvim", branch = "coq" },
+            { "ms-jpq/coq.artifacts", branch = "artifacts" },
+            -- { 'ms-jpq/coq.thirdparty', branch = "3p" },
+        },
+        init = function()
+            vim.g.coq_settings = {
+                auto_start = true, -- if you want to start COQ at startup
+                keymap = { pre_select = true },
+            }
+        end,
         opts = {
             servers = {
                 emmet_language_server = { filetypes = { "html" } },
@@ -78,16 +88,14 @@ require("lazy").setup({
         },
         config = function(_, opts)
             local lspconfig = require("lspconfig")
+            local coq = require("coq")
             for server, config in pairs(opts.servers) do
-                -- passing config.capabilities to blink.cmp merges with the capabilities in your
-                -- `opts[server].capabilities, if you've defined it
-                config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-                config.capabilities.textDocument.foldingRange = {
-                    dynamicRegistration = false,
-                    lineFoldingOnly = true,
-                }
+                -- config.capabilities.textDocument.foldingRange = {
+                --     dynamicRegistration = false,
+                --     lineFoldingOnly = true,
+                -- }
 
-                lspconfig[server].setup(config)
+                lspconfig[server].setup(coq.lsp_ensure_capabilities(config))
             end
 
             require("ufo").setup({})
