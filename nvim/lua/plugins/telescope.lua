@@ -9,10 +9,10 @@ return {
     config = function()
         require("telescope").setup({
             extensions = {
-                file_browser = {
-                    -- disables netrw and use telescope-file-browser in its place
-                    hijack_netrw = true,
-                },
+                -- file_browser = {
+                --     -- disables netrw and use telescope-file-browser in its place
+                --     hijack_netrw = true,
+                -- },
             },
             defaults = {
                 mappings = {
@@ -31,6 +31,6 @@ return {
         })
         local telescope = require("telescope")
         telescope.load_extension("fzf")
-        telescope.load_extension("file_browser")
+        -- telescope.load_extension("file_browser")
     end,
 }

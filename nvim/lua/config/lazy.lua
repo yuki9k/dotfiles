@@ -32,15 +32,8 @@ require("lazy").setup({
         dependencies = {
             { "ms-jpq/coq_nvim", branch = "coq" },
             { "ms-jpq/coq.artifacts", branch = "artifacts" },
-            -- { 'ms-jpq/coq.thirdparty', branch = "3p" },
         },
         init = function()
-            -- vim.g.coq_settings = {
-            --     auto_start = true, -- if you want to start COQ at startup
-            --     keymap = { pre_select = true },
-            --     display = { ghost_text = { enabled = false } },
-            -- }
-
             -- THIS IS TO GET AUTOPAIRS TO WORK WITH COQ
             local remap = vim.api.nvim_set_keymap
 
@@ -50,7 +43,7 @@ require("lazy").setup({
 
             vim.g.coq_settings = {
                 auto_start = true,
-                keymap = { recommended = false, pre_select = true },
+                keymap = { recommended = false, pre_select = false, jump_to_mark = "gm" },
                 display = { ghost_text = { enabled = false } },
             }
 
@@ -150,9 +143,9 @@ require("lazy").setup({
                         },
                     },
                 },
-                html = {},
+                html = { filetypes = { "typescript", "javascript", "html", "php" } },
                 htmx = {
-                    filetypes = { "html" },
+                    filetypes = { "typescript", "javascript", "html", "php" },
                 },
                 intelephense = {
                     cmd = { "intelephense", "--stdio" },
@@ -172,7 +165,6 @@ require("lazy").setup({
                 --     dynamicRegistration = false,
                 --     lineFoldingOnly = true,
                 -- }
-
                 lspconfig[server].setup(coq.lsp_ensure_capabilities(config))
             end
 
