@@ -1,15 +1,15 @@
 -- Motions
-vim.keymap.set({ "n", "v" }, "J", "}")
-vim.keymap.set({ "n", "v" }, "H", "^")
-vim.keymap.set({ "n", "v" }, "L", "$")
-vim.keymap.set({ "n", "v" }, "K", "{")
 vim.keymap.set({ "n", "v" }, "]]", "/\\v\\}|\\)|\\>\\<cr>") -- Forward search for closing brackets
 vim.keymap.set({ "n", "v" }, "[[", "?\\v\\{|\\(|\\<\\<cr>") -- Backward search for opening brackets
 vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
 vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
--- vim.keymap.set({ "n", "v" }, "J", "6j")
--- vim.keymap.set({ "n", "v" }, "K", "6k")
+vim.keymap.set({ "n", "v" }, "J", "6j")
+vim.keymap.set({ "n", "v" }, "K", "6k")
+-- vim.keymap.set({ "n", "v" }, "J", "}")
+-- vim.keymap.set({ "n", "v" }, "K", "{")
+vim.keymap.set({ "n", "v" }, "H", "^")
+vim.keymap.set({ "n", "v" }, "L", "$")
 
 -- Terminal
 vim.keymap.set("n", "<leader>tt", "<cmd>:ToggleTerm dir=%:p:h<cr>")
@@ -25,17 +25,17 @@ vim.keymap.set("n", "<leader>sa", "<cmd>Lspsaga code_action<cr>", { desc = "Show
 vim.keymap.set("n", "<leader>dd", "<cmd>Lspsaga diagnostic_jump_next<cr>", { desc = "Next diagnostic" })
 vim.keymap.set("n", "<leader>dD", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { desc = "Previous diagnostic" })
 vim.keymap.set("n", "<leader>rr", function()
-    vim.lsp.buf.rename()
+  vim.lsp.buf.rename()
 end, { desc = "Rename symbol" })
 vim.keymap.set("n", "<leader>sS", function()
-    vim.lsp.buf.signature_help()
+  vim.lsp.buf.signature_help()
 end, { desc = "Show signature" })
 
 -- fzf-lua
-vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "FzfLua find files" })
+vim.keymap.set("n", "<leader>fF", "<cmd>FzfLua files<cr>", { desc = "FzfLua find files" })
+vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua buffers<cr>", { desc = "FzfLua buffers" })
 vim.keymap.set("n", "<leader>fg", "<cmd>FzfLua grep<cr>", { desc = "FzfLua grep" })
 vim.keymap.set("n", "<leader>fG", "<cmd>FzfLua live_grep<cr>", { desc = "FzfLua live grep" })
-vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>", { desc = "FzfLua buffers" })
 vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua helptags<cr>", { desc = "FzfLua help" })
 vim.keymap.set("n", "<leader>ft", "<cmd>FzfLua treesitter<cr>", { desc = "FzfLua treesitter" })
 
@@ -48,14 +48,14 @@ vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 
 -- Buffers
 vim.keymap.set("n", "<leader>bd", function()
-    Snacks.bufdelete()
+  Snacks.bufdelete()
 end, { desc = "Delete buffer" })
 vim.keymap.set("n", "<leader>bl", "<cmd>buffers<cr>", { desc = "List buffers" })
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<C-n>", "<cmd>bnext<cr>")
 vim.keymap.set("n", "<C-p>", "<cmd>bprevious<cr>")
-vim.api.nvim_set_keymap("n", "<C-q>", "<Nop>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<C-q>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-q>", "<cmd>b#<cr>")
 
 -- Windows
@@ -65,16 +65,15 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { remap = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { remap = true })
 
 -- Other
+vim.keymap.set("n", "<leader>pp", "<cmd>PeekOpen<cr>", { desc = "Open Markdown preview" })
+vim.keymap.set("n", "<leader>pP", "<cmd>PeekClose<cr>", { desc = "Close Markdown preview" })
 vim.keymap.set("n", "<leader>nh", function()
-    Snacks.notifier.show_history()
+  Snacks.notifier.show_history()
 end, { desc = "Show notification history" })
 vim.keymap.set("v", "yc", '"+y')
 vim.keymap.set(
-    "n",
-    "<leader>hl",
-    "<cmd>TSHighlightCapturesUnderCursor<cr>",
-    { desc = "Show treesitter and syntax highlight groups under the cursor" }
+  "n",
+  "<leader>hl",
+  "<cmd>TSHighlightCapturesUnderCursor<cr>",
+  { desc = "Show treesitter and syntax highlight groups under the cursor" }
 )
--- Open/close Markdown preview
-vim.keymap.set("n", "<leader>pp", "<cmd>PeekOpen<cr>", { desc = "Open Markdown preview" })
-vim.keymap.set("n", "<leader>pP", "<cmd>PeekClose<cr>", { desc = "Close Markdown preview" })

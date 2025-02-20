@@ -28,14 +28,3 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
         vim.cmd("set formatoptions-=cro")
     end,
 })
-
--- Create an autocmd group for updating guicursor on Colorscheme event
--- vim.api.nvim_create_augroup("kitty_cursor", { clear = true })
---
--- vim.api.nvim_create_autocmd("Colorscheme", {
---     group = "kitty_cursor",
---     callback = function()
---         vim.opt.guicursor = "n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor"
---     end,
--- })
--- vim.cmd.colorscheme("midori")

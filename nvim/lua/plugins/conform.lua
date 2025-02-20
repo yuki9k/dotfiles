@@ -8,23 +8,14 @@ return {
             html = { "prettierd", "prettier", stop_after_first = true },
             css = { "prettierd", "prettier", stop_after_first = true },
             json = { "prettierd", "prettier", stop_after_first = true },
-            php = { "php-cs-fixer" },
             cpp = { "clang-format" },
+            sql = { "sql-formatter" },
         },
         formatters = {
             stylua = {
-                prepend_args = { "--indent-type", "Spaces", "--indent-width", "4" },
+                prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
             },
         },
-        -- ["php-cs-fixer"] = {
-        --     command = "php-cs-fixer",
-        --     args = {
-        --         "fix",
-        --         "--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
-        --         "$FILENAME",
-        --     },
-        --     stdin = false,
-        -- },
         format_on_save = {
             timeout_ms = 500,
             lsp_format = "fallback",
